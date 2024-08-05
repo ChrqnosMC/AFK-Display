@@ -1,0 +1,37 @@
+name: Modrinth release
+on: 
+  push:
+    tags:
+      - '*'
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: src
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: afk-display-${{github.ref_name}}
+          path: src
+      - name: Create zip file
+        run: zip -r afk-display-${{github.ref_name}}.zip . -x ".github/*" ".gitattributes" "supported_versions.txt"
+        working-directory: src
+      - name: Read supported versions
+        uses: andstor/file-reader-action@v1
+        id: read_file
+        with:
+          path: src/supported_versions.txt
+      - name: Upload to modrinth
+        uses: kir-antipov/mc-publish@v3.3
+        with:
+          modrinth-token: ${{secrets.ACCESS_TOKEN}}
+          modrinth-id: qKCUthaY
+          name: AFK Display ${{github.ref_name}}
+          version: ${{github.ref_name}}
+          files: |
+            src/afk-display-${{github.ref_name}}.zip
+          game-versions: ${{steps.read_file.outputs.contents}}
+          loaders: datapack
