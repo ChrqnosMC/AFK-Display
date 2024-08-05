@@ -15,6 +15,7 @@ jobs:
           path: src
       - name: Get Branch
         run: |
+          cd src
           branch=$(git branch -r --contains ${{ github.ref }} --format "%(refname:lstrip=3)")
           echo ::set-env name=BRANCH::$branch
       - name: Upload artifact
