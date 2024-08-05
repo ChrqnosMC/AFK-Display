@@ -2,7 +2,7 @@ name: Modrinth release
 on: 
   push:
     tags:
-      - '*'
+      - '[0-9]+.[0-9]+.[0-9]+'
     branches-ignore:
       - 'java-latest'
 jobs:
