@@ -23,7 +23,7 @@ jobs:
           name: afk-display-${{env.BRANCH}}-${{github.ref_name}}
           path: src
       - name: Create zip file
-        run: zip -r afk-display-${{env.BRANCH}}-${{github.ref_name}}.zip . -x ".git/*" ".github/*" ".gitattributes" "supported_versions.txt"
+        run: zip -r afk-display-${{env.BRANCH}}-${{github.ref_name}}.zip . -x ".github/*" ".gitattributes" "supported_versions.txt"
         working-directory: src
       - name: Read supported versions
         uses: andstor/file-reader-action@v1
