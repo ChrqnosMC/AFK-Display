@@ -21,14 +21,14 @@ jobs:
           echo "branch=1.21" >> $GITHUB_ENV
           tag=${{github.ref_name}}
           echo "tag=$tag" >> $GITHUB_ENV
-          echo "Branch is $branch. Tag is $tag."
+          echo "name=afk-display" >> $GITHUB_ENV
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: afk-display-${{env.branch}}-${{env.tag}}
+          name: ${{env.name}}-${{env.branch}}-${{env.tag}}
           path: src
       - name: Create zip file
-        run: zip -r afk-display-${{env.branch}}-${{env.tag}}.zip . -x ".git/*" ".github/*" ".gitattributes" "supported_versions.txt"
+        run: zip -r ${{env.name}}-${{env.branch}}-${{env.tag}}.zip . -x ".git/*" ".github/*" ".gitattributes" "supported_versions.txt"
         working-directory: src
       - name: Read supported versions
         uses: andstor/file-reader-action@v1
@@ -43,6 +43,6 @@ jobs:
           name: AFK Display ${{env.branch}}-${{env.tag}}
           version: ${{env.tag}}
           files: |
-            src/afk-display-${{env.branch}}-${{env.tag}}.zip
+            src/${{env.name}}-${{env.branch}}-${{env.tag}}.zip
           game-versions: ${{steps.read_file.outputs.contents}}
           loaders: datapack
