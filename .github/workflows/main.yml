@@ -18,9 +18,7 @@ jobs:
         id: get_branch
         run: |
           cd src
-          raw=$(git branch -r --contains ${{ github.ref }})
-          branch=$(echo ${raw##*/} | tr [:upper:] [:lower:])
-          echo "branch=$branch" >> $GITHUB_ENV
+          echo "branch=1.21" >> $GITHUB_ENV
           tag=${{github.ref_name}}
           echo "tag=$tag" >> $GITHUB_ENV
           echo "Branch is $branch. Tag is $tag."
@@ -42,7 +40,7 @@ jobs:
         with:
           modrinth-token: ${{secrets.ACCESS_TOKEN}}
           modrinth-id: qKCUthaY
-          name: AFK Display ${{env.branch}} ${{env.tag}}
+          name: AFK Display ${{env.branch}}-${{env.tag}}
           version: ${{env.tag}}
           files: |
             src/afk-display-${{env.branch}}-${{env.tag}}.zip
