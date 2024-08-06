@@ -21,7 +21,7 @@ jobs:
           branch=$(git branch -r --contains ${{github.ref}} --format "%(refname:lstrip=3)")
           echo "branch=$branch" >> $GITHUB_OUTPUT
           tag=${{github.ref_name}}
-          echo "tag=${tag:1}" >> $GITHUB_OUTPUT
+          echo "tag=$tag" >> $GITHUB_OUTPUT
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
