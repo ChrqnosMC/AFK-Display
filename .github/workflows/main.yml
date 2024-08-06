@@ -40,7 +40,7 @@ jobs:
         with:
           modrinth-token: ${{secrets.ACCESS_TOKEN}}
           modrinth-id: qKCUthaY
-          name: AFK Display ${{env.branch}} ${{env.tag}}
+          name: AFK Display ${{env.branch}}-${{env.tag}}
           version: ${{env.tag}}
           files: |
             src/afk-display-${{env.branch}}-${{env.tag}}.zip
