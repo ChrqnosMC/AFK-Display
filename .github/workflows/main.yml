@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          path: src
       - name: Get Branch
         id: get_branch
         run: |
@@ -21,6 +19,10 @@ jobs:
           echo "branch=$branch" >> $GITHUB_ENV
           tag=${{github.ref_name}}
           echo "tag=$tag" >> $GITHUB_ENV
+      - name: Checkout src
+        uses: actions/checkout@v4
+        with:
+          path: src
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
