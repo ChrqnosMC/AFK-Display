@@ -2,7 +2,7 @@ name: Modrinth release
 on: 
   push:
     tags:
-      - '[0-9]+.[0-9]+.[0-9]+'
+      - 'v*'
     branches-ignore:
       - 'java-latest'
 jobs:
@@ -17,15 +17,17 @@ jobs:
         id: get_branch
         run: |
           cd src
-          branch=$(git branch -r --contains ${{ github.ref }} --format "%(refname:lstrip=3)")
+          branch=$(git branch -r --contains ${{github.ref}} --format "%(refname:lstrip=3)")
           echo "branch=$branch" >> $GITHUB_OUTPUT
+          tag=${{github.ref_name}}
+          echo "tag=${tag:1}" >> $GITHUB_OUTPUT
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: afk-display-${{steps.get_branch.output.branch}}-${{github.ref_name}}
+          name: afk-display-${{steps.get_branch.output.branch}}-${{steps.get_branch.output.tag}}
           path: src
       - name: Create zip file
-        run: zip -r afk-display-${{steps.get_branch.output.branch}}-${{github.ref_name}}.zip . -x ".git/*" ".github/*" ".gitattributes" "supported_versions.txt"
+        run: zip -r afk-display-${{steps.get_branch.output.branch}}-${{steps.get_branch.output.tag}}.zip . -x ".git/*" ".github/*" ".gitattributes" "supported_versions.txt"
         working-directory: src
       - name: Read supported versions
         uses: andstor/file-reader-action@v1
@@ -37,9 +39,9 @@ jobs:
         with:
           modrinth-token: ${{secrets.ACCESS_TOKEN}}
           modrinth-id: qKCUthaY
-          name: AFK Display ${{steps.get_branch.output.branch}} ${{github.ref_name}}
-          version: ${{github.ref_name}}
+          name: AFK Display ${{steps.get_branch.output.branch}} ${{steps.get_branch.output.tag}}
+          version: ${{steps.get_branch.output.tag}}
           files: |
-            src/afk-display-${{steps.get_branch.output.branch}}-${{github.ref_name}}.zip
+            src/afk-display-${{steps.get_branch.output.branch}}-${{steps.get_branch.output.tag}}.zip
           game-versions: ${{steps.read_file.outputs.contents}}
           loaders: datapack
