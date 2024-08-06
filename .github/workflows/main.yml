@@ -22,6 +22,7 @@ jobs:
           echo "branch=$branch" >> $GITHUB_OUTPUT
           tag=${{github.ref_name}}
           echo "tag=$tag" >> $GITHUB_OUTPUT
+          echo ${{github}}
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
