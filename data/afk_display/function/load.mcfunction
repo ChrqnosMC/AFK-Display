@@ -11,4 +11,4 @@ team add afk "AFK Display"
 team modify afk color white
 team modify afk suffix {"text":" [AFK]", "color":"white"}
 
-tellraw @a ["",{"text":"Afk Display datapack has been reloaded","bold":true,"color":"white"}]
+tellraw @a ["",{"text":"Afk Display datapack has been reloaded"}]
