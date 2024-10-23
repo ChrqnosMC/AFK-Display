@@ -40,8 +40,7 @@ jobs:
         with:
           modrinth-token: ${{secrets.ACCESS_TOKEN}}
           modrinth-id: qKCUthaY
-          modrinth-featured: false
-          modrinth-unfeature-mode: game-version-any
+          game-version-filter: none
           name: AFK Display ${{env.branch}}-${{env.tag}}
           version: ${{env.tag}}
           files: |
